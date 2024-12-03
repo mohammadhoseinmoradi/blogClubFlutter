@@ -1,6 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import './data.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,7 +49,12 @@ class MyApp extends StatelessWidget {
             bodyMedium: TextStyle(
                 fontFamily: DefaultFontFamily,
                 color: secondaryTextColor,
-                fontSize: 12)),
+                fontSize: 12),
+            bodyLarge: TextStyle(
+                fontFamily: DefaultFontFamily,
+                fontWeight: FontWeight.bold,
+                color: primaryTextcolor,
+                fontSize: 18)),
       ),
       home: const HomeScreen(),
     );
@@ -92,11 +98,94 @@ class HomeScreen extends StatelessWidget {
                 style: themeData.textTheme.headlineLarge,
               ),
             ),
-            _StoryList(stories: stories, themeData: themeData)
+            _StoryList(stories: stories, themeData: themeData),
+            const SizedBox(
+              height: 16,
+            ),
+            const _CategoryList()
           ],
         ),
       ),
     ));
+  }
+}
+
+class _CategoryList extends StatelessWidget {
+  const _CategoryList({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final categories = AppDatabase.categories;
+    return CarouselSlider.builder(
+        itemCount: categories.length,
+        itemBuilder: (context, index, realIndex) {
+          return _CategoryItem(
+            category: categories[realIndex],
+          );
+        },
+        options: CarouselOptions(
+          scrollDirection: Axis.horizontal,
+          viewportFraction: 0.8,
+          aspectRatio: 1.2,
+          initialPage: 0,
+          disableCenter: true,
+          enableInfiniteScroll: false,
+          enlargeCenterPage: true,
+          enlargeStrategy: CenterPageEnlargeStrategy.height,
+        ));
+  }
+}
+
+class _CategoryItem extends StatelessWidget {
+  final Category category;
+  const _CategoryItem({
+    super.key,
+    required this.category,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(children: [
+      Positioned.fill(
+          top: 100,
+          right: 65,
+          left: 65,
+          bottom: 24,
+          child: Container(
+            decoration: const BoxDecoration(
+              boxShadow: [BoxShadow(blurRadius: 20, color: Color(0xaa0d253c))],
+            ),
+          )),
+      Container(
+        margin: const EdgeInsets.fromLTRB(8, 0, 8, 16),
+        foregroundDecoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(32),
+            gradient: const LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.center,
+                colors: [Color(0xff0d253c), Colors.transparent])),
+        decoration: BoxDecoration(
+            color: Colors.black, borderRadius: BorderRadius.circular(32)),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(32),
+          child: Image.asset(
+            'assets/img/posts/large/${category.imageFileName}',
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+      Positioned(
+        bottom: 48,
+        left: 42,
+        child: Text(
+          category.title,
+          style:
+              Theme.of(context).textTheme.bodyLarge!.apply(color: Colors.white),
+        ),
+      )
+    ]);
   }
 }
 
