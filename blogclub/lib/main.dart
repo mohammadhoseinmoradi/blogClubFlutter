@@ -1,10 +1,17 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import './data.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.white,
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.white,
+    systemNavigationBarIconBrightness: Brightness.dark,
+  ));
   runApp(const MyApp());
 }
 
@@ -68,13 +75,21 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: primaryTextcolor,
                 fontSize: 18),
+            bodySmall: TextStyle(
+                fontFamily: DefaultFontFamily,
+                fontWeight: FontWeight.bold,
+                color: Color(0xff7b8bb2),
+                fontSize: 10),
             headlineMedium: TextStyle(
                 fontFamily: DefaultFontFamily,
                 fontSize: 20,
                 color: primaryTextcolor,
                 fontWeight: FontWeight.w700)),
       ),
-      home: const HomeScreen(),
+      home: Stack(children: [
+        const Positioned.fill(child: HomeScreen()),
+        Positioned(bottom: 0, right: 0, left: 0, child: _BootomNavigation())
+      ]),
     );
   }
 }
@@ -89,7 +104,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -123,7 +138,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const _CategoryList(),
             const _PostList(),
-            SizedBox(
+            const SizedBox(
               height: 32,
             ),
           ],
@@ -380,18 +395,18 @@ class _Post extends StatelessWidget {
         ListView.builder(
             itemCount: posts.length,
             itemExtent: 141,
-            physics: ClampingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (context, index) {
               final post = posts[index];
 
               return Container(
-                margin: EdgeInsets.fromLTRB(32, 8, 32, 8),
+                margin: const EdgeInsets.fromLTRB(32, 8, 32, 8),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
-                    BoxShadow(blurRadius: 16, color: Color(0x1a5282ff))
+                    const BoxShadow(blurRadius: 16, color: Color(0x1a5282ff))
                   ],
                 ),
                 child: Row(
@@ -410,20 +425,20 @@ class _Post extends StatelessWidget {
                           children: [
                             Text(
                               post.caption,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontFamily: MyApp.DefaultFontFamily,
                                   color: Color(0xff376aed),
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
                             Text(
                               post.title,
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
@@ -433,21 +448,21 @@ class _Post extends StatelessWidget {
                                         .textTheme
                                         .bodyMedium!
                                         .color),
-                                SizedBox(
+                                const SizedBox(
                                   width: 4,
                                 ),
                                 Text(
                                   post.likes,
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
-                                SizedBox(width: 16),
+                                const SizedBox(width: 16),
                                 Icon(CupertinoIcons.clock,
                                     size: 16,
                                     color: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
                                         .color),
-                                SizedBox(
+                                const SizedBox(
                                   width: 4,
                                 ),
                                 Text(
@@ -478,6 +493,97 @@ class _Post extends StatelessWidget {
                 ),
               );
             })
+      ],
+    );
+  }
+}
+
+class _BootomNavigation extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 85,
+      child: Stack(children: [
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: Container(
+            height: 65,
+            decoration: const BoxDecoration(color: Colors.white, boxShadow: [
+              BoxShadow(blurRadius: 20, color: Color(0xaa9b8487))
+            ]),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _BottomNavigationItem(
+                  iconFileName: 'Home.png',
+                  activeIconFileName: 'Home.png',
+                  title: 'Home',
+                ),
+                _BottomNavigationItem(
+                  iconFileName: 'Articles.png',
+                  activeIconFileName: 'Articles.png',
+                  title: 'Article',
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                _BottomNavigationItem(
+                  iconFileName: 'Search.png',
+                  activeIconFileName: 'Search.png',
+                  title: 'Search',
+                ),
+                _BottomNavigationItem(
+                  iconFileName: 'Menu.png',
+                  activeIconFileName: 'Menu.png',
+                  title: 'Menu',
+                ),
+              ],
+            ),
+          ),
+        ),
+        Center(
+          child: Container(
+            width: 65,
+            height: 85,
+            alignment: Alignment.topCenter,
+            child: Container(
+                height: 65,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(32.5),
+                  color: const Color(0xff376aed),
+                  border: Border.all(color: Colors.white, width: 4),
+                ),
+                child: Image.asset('assets/img/icons/plus.png')),
+          ),
+        )
+      ]),
+    );
+  }
+}
+
+class _BottomNavigationItem extends StatelessWidget {
+  final String iconFileName;
+  final String activeIconFileName;
+  final String title;
+  const _BottomNavigationItem(
+      {super.key,
+      required this.iconFileName,
+      required this.activeIconFileName,
+      required this.title});
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(
+          'assets/img/icons/${iconFileName}',
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        Text(title, style: Theme.of(context).textTheme.bodySmall),
       ],
     );
   }
