@@ -1,4 +1,5 @@
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './data.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -14,11 +15,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final primaryTextcolor = const Color(0xff0D253C);
-    final secondaryTextColor = const Color(0xff2D4379);
+    const primaryTextcolor = Color(0xff0D253C);
+    const secondaryTextColor = Color(0xff2D4379);
+    const primaryColor = Color(0xff376aed);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        textButtonTheme: TextButtonThemeData(
+            style: ButtonStyle(
+                textStyle: WidgetStateProperty.all(const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: DefaultFontFamily)))),
         // This is the theme of your application.
         //
         // TRY THIS: Try running your application with "flutter run". You'll see
@@ -35,7 +43,7 @@ class MyApp extends StatelessWidget {
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
         primarySwatch: Colors.blue,
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
             headlineLarge: TextStyle(
                 fontFamily: DefaultFontFamily,
                 fontWeight: FontWeight.bold,
@@ -46,6 +54,11 @@ class MyApp extends StatelessWidget {
                 color: secondaryTextColor,
                 fontWeight: FontWeight.w200,
                 fontSize: 18),
+            titleLarge: TextStyle(
+                fontFamily: DefaultFontFamily,
+                color: primaryTextcolor,
+                fontWeight: FontWeight.w400,
+                fontSize: 14),
             bodyMedium: TextStyle(
                 fontFamily: DefaultFontFamily,
                 color: secondaryTextColor,
@@ -54,7 +67,12 @@ class MyApp extends StatelessWidget {
                 fontFamily: DefaultFontFamily,
                 fontWeight: FontWeight.bold,
                 color: primaryTextcolor,
-                fontSize: 18)),
+                fontSize: 18),
+            headlineMedium: TextStyle(
+                fontFamily: DefaultFontFamily,
+                fontSize: 20,
+                color: primaryTextcolor,
+                fontWeight: FontWeight.w700)),
       ),
       home: const HomeScreen(),
     );
@@ -71,6 +89,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -102,7 +121,11 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            const _CategoryList()
+            const _CategoryList(),
+            const _PostList(),
+            SizedBox(
+              height: 32,
+            ),
           ],
         ),
       ),
@@ -111,9 +134,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _CategoryList extends StatelessWidget {
-  const _CategoryList({
-    super.key,
-  });
+  const _CategoryList();
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +143,8 @@ class _CategoryList extends StatelessWidget {
         itemCount: categories.length,
         itemBuilder: (context, index, realIndex) {
           return _CategoryItem(
+            left: realIndex == 0 ? 32 : 8,
+            right: realIndex == categories.length - 1 ? 32 : 8,
             category: categories[realIndex],
           );
         },
@@ -132,6 +155,7 @@ class _CategoryList extends StatelessWidget {
           initialPage: 0,
           disableCenter: true,
           enableInfiniteScroll: false,
+          scrollPhysics: const BouncingScrollPhysics(),
           enlargeCenterPage: true,
           enlargeStrategy: CenterPageEnlargeStrategy.height,
         ));
@@ -140,58 +164,69 @@ class _CategoryList extends StatelessWidget {
 
 class _CategoryItem extends StatelessWidget {
   final Category category;
+  final double left;
+  final double right;
   const _CategoryItem({
-    super.key,
     required this.category,
+    required this.left,
+    required this.right,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Positioned.fill(
-          top: 100,
-          right: 65,
-          left: 65,
-          bottom: 24,
+    return Container(
+      margin: EdgeInsets.fromLTRB(left, 0, right, 0),
+      child: Stack(children: [
+        Positioned.fill(
+            top: 100,
+            right: 65,
+            left: 65,
+            bottom: 24,
+            child: Container(
+              decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(blurRadius: 20, color: Color(0xaa0d253c))
+                ],
+              ),
+            )),
+        Positioned.fill(
           child: Container(
-            decoration: const BoxDecoration(
-              boxShadow: [BoxShadow(blurRadius: 20, color: Color(0xaa0d253c))],
+            margin: const EdgeInsets.fromLTRB(0, 0, 0, 16),
+            foregroundDecoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(32),
+                gradient: const LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.center,
+                    colors: [Color(0xff0d253c), Colors.transparent])),
+            decoration: BoxDecoration(
+                color: Colors.black, borderRadius: BorderRadius.circular(32)),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(32),
+              child: Image.asset(
+                'assets/img/posts/large/${category.imageFileName}',
+                fit: BoxFit.cover,
+              ),
             ),
-          )),
-      Container(
-        margin: const EdgeInsets.fromLTRB(8, 0, 8, 16),
-        foregroundDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(32),
-            gradient: const LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.center,
-                colors: [Color(0xff0d253c), Colors.transparent])),
-        decoration: BoxDecoration(
-            color: Colors.black, borderRadius: BorderRadius.circular(32)),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(32),
-          child: Image.asset(
-            'assets/img/posts/large/${category.imageFileName}',
-            fit: BoxFit.cover,
           ),
         ),
-      ),
-      Positioned(
-        bottom: 48,
-        left: 42,
-        child: Text(
-          category.title,
-          style:
-              Theme.of(context).textTheme.bodyLarge!.apply(color: Colors.white),
-        ),
-      )
-    ]);
+        Positioned(
+          bottom: 48,
+          left: 32,
+          child: Text(
+            category.title,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .apply(color: Colors.white),
+          ),
+        )
+      ]),
+    );
   }
 }
 
 class _StoryList extends StatelessWidget {
   const _StoryList({
-    super.key,
     required this.stories,
     required this.themeData,
   });
@@ -219,7 +254,6 @@ class _StoryList extends StatelessWidget {
 
 class _Story extends StatelessWidget {
   const _Story({
-    super.key,
     required this.story,
     required this.themeData,
   });
@@ -286,7 +320,7 @@ class _Story extends StatelessWidget {
         strokeWidth: 2,
         radius: const Radius.circular(24),
         color: const Color(0xff7b8bb2),
-        dashPattern: [8, 3],
+        dashPattern: const [8, 3],
         padding: const EdgeInsets.all(7),
         child: Container(
           decoration: BoxDecoration(
@@ -302,6 +336,149 @@ class _Story extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(17),
       child: Image.asset('assets/img/stories/${story.imageFileName}'),
+    );
+  }
+}
+
+class _PostList extends StatelessWidget {
+  const _PostList({super.key});
+  @override
+  Widget build(BuildContext context) {
+    final posts = AppDatabase.posts;
+    return _Post(posts: posts);
+  }
+}
+
+class _Post extends StatelessWidget {
+  const _Post({
+    super.key,
+    required this.posts,
+  });
+
+  final List<PostData> posts;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 32, right: 16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Latest News',
+                  style: Theme.of(context).textTheme.headlineMedium),
+              TextButton(
+                onPressed: () {},
+                child: const Text('More',
+                    style: TextStyle(color: Color(0xff376aed))),
+              ),
+            ],
+          ),
+        ),
+        ListView.builder(
+            itemCount: posts.length,
+            itemExtent: 141,
+            physics: ClampingScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              final post = posts[index];
+
+              return Container(
+                margin: EdgeInsets.fromLTRB(32, 8, 32, 8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(blurRadius: 16, color: Color(0x1a5282ff))
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.asset(
+                          'assets/img/posts/small/${post.imageFileName}'),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              post.caption,
+                              style: TextStyle(
+                                  fontFamily: MyApp.DefaultFontFamily,
+                                  color: Color(0xff376aed),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              post.title,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            SizedBox(height: 16),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Icon(CupertinoIcons.hand_thumbsup,
+                                    size: 16,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .color),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  post.likes,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                SizedBox(width: 16),
+                                Icon(CupertinoIcons.clock,
+                                    size: 16,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .color),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  post.time,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    alignment: Alignment.centerRight,
+                                    child: Icon(
+                                        post.isBookmarked
+                                            ? CupertinoIcons.bookmark_fill
+                                            : CupertinoIcons.bookmark,
+                                        size: 16,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .color),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            })
+      ],
     );
   }
 }
