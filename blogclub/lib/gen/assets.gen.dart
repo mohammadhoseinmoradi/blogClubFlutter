@@ -12,6 +12,9 @@ import 'package:flutter/widgets.dart';
 class $AssetsImgGen {
   const $AssetsImgGen();
 
+  /// Directory path: assets/img/background
+  $AssetsImgBackgroundGen get background => const $AssetsImgBackgroundGen();
+
   /// Directory path: assets/img/icons
   $AssetsImgIconsGen get icons => const $AssetsImgIconsGen();
 
@@ -20,6 +23,17 @@ class $AssetsImgGen {
 
   /// Directory path: assets/img/stories
   $AssetsImgStoriesGen get stories => const $AssetsImgStoriesGen();
+}
+
+class $AssetsImgBackgroundGen {
+  const $AssetsImgBackgroundGen();
+
+  /// File path: assets/img/background/Splashscreen.png
+  AssetGenImage get splashscreen =>
+      const AssetGenImage('assets/img/background/Splashscreen.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [splashscreen];
 }
 
 class $AssetsImgIconsGen {
@@ -31,6 +45,9 @@ class $AssetsImgIconsGen {
 
   /// File path: assets/img/icons/Home.png
   AssetGenImage get home => const AssetGenImage('assets/img/icons/Home.png');
+
+  /// File path: assets/img/icons/LOGO.svg
+  String get logo => 'assets/img/icons/LOGO.svg';
 
   /// File path: assets/img/icons/Menu.png
   AssetGenImage get menu => const AssetGenImage('assets/img/icons/Menu.png');
@@ -63,9 +80,10 @@ class $AssetsImgIconsGen {
   AssetGenImage get plus => const AssetGenImage('assets/img/icons/plus.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [
+  List<dynamic> get values => [
         articles,
         home,
+        logo,
         menu,
         search,
         category1,
