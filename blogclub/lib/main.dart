@@ -1,3 +1,5 @@
+import 'package:blogclub/gen/assets.gen.dart';
+import 'package:blogclub/gen/fonts.gen.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  static const DefaultFontFamily = "Avenir";
   const MyApp({super.key});
 
   // This widget is the root of your application.
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
     const primaryTextcolor = Color(0xff0D253C);
     const secondaryTextColor = Color(0xff2D4379);
     const primaryColor = Color(0xff376aed);
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
                 textStyle: WidgetStateProperty.all(const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    fontFamily: DefaultFontFamily)))),
+                    fontFamily: FontFamily.avenir)))),
         // This is the theme of your application.
         //
         // TRY THIS: Try running your application with "flutter run". You'll see
@@ -52,36 +54,36 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         textTheme: const TextTheme(
             headlineLarge: TextStyle(
-                fontFamily: DefaultFontFamily,
+                fontFamily: FontFamily.avenir,
                 fontWeight: FontWeight.bold,
                 color: primaryTextcolor,
                 fontSize: 24),
             titleSmall: TextStyle(
-                fontFamily: DefaultFontFamily,
+                fontFamily: FontFamily.avenir,
                 color: secondaryTextColor,
                 fontWeight: FontWeight.w200,
                 fontSize: 18),
             titleLarge: TextStyle(
-                fontFamily: DefaultFontFamily,
+                fontFamily: FontFamily.avenir,
                 color: primaryTextcolor,
                 fontWeight: FontWeight.w400,
                 fontSize: 14),
             bodyMedium: TextStyle(
-                fontFamily: DefaultFontFamily,
+                fontFamily: FontFamily.avenir,
                 color: secondaryTextColor,
                 fontSize: 12),
             bodyLarge: TextStyle(
-                fontFamily: DefaultFontFamily,
+                fontFamily: FontFamily.avenir,
                 fontWeight: FontWeight.bold,
                 color: primaryTextcolor,
                 fontSize: 18),
             bodySmall: TextStyle(
-                fontFamily: DefaultFontFamily,
+                fontFamily: FontFamily.avenir,
                 fontWeight: FontWeight.bold,
                 color: Color(0xff7b8bb2),
                 fontSize: 10),
             headlineMedium: TextStyle(
-                fontFamily: DefaultFontFamily,
+                fontFamily: FontFamily.avenir,
                 fontSize: 20,
                 color: primaryTextcolor,
                 fontWeight: FontWeight.w700)),
@@ -117,11 +119,7 @@ class HomeScreen extends StatelessWidget {
                     "Hi , Jonathan!",
                     style: themeData.textTheme.titleSmall,
                   ),
-                  Image.asset(
-                    'assets/img/icons/notification.png',
-                    width: 32,
-                    height: 32,
-                  ),
+                  Assets.img.icons.notification.image(width: 32, height: 32)
                 ],
               ),
             ),
@@ -356,7 +354,7 @@ class _Story extends StatelessWidget {
 }
 
 class _PostList extends StatelessWidget {
-  const _PostList({super.key});
+  const _PostList();
   @override
   Widget build(BuildContext context) {
     final posts = AppDatabase.posts;
@@ -366,7 +364,6 @@ class _PostList extends StatelessWidget {
 
 class _Post extends StatelessWidget {
   const _Post({
-    super.key,
     required this.posts,
   });
 
@@ -405,8 +402,8 @@ class _Post extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    const BoxShadow(blurRadius: 16, color: Color(0x1a5282ff))
+                  boxShadow: const [
+                    BoxShadow(blurRadius: 16, color: Color(0x1a5282ff))
                   ],
                 ),
                 child: Row(
@@ -426,7 +423,7 @@ class _Post extends StatelessWidget {
                             Text(
                               post.caption,
                               style: const TextStyle(
-                                  fontFamily: MyApp.DefaultFontFamily,
+                                  fontFamily: FontFamily.avenir,
                                   color: Color(0xff376aed),
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700),
@@ -501,7 +498,7 @@ class _Post extends StatelessWidget {
 class _BootomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 85,
       child: Stack(children: [
         Positioned(
@@ -568,8 +565,7 @@ class _BottomNavigationItem extends StatelessWidget {
   final String activeIconFileName;
   final String title;
   const _BottomNavigationItem(
-      {super.key,
-      required this.iconFileName,
+      {required this.iconFileName,
       required this.activeIconFileName,
       required this.title});
   @override
@@ -578,7 +574,7 @@ class _BottomNavigationItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
-          'assets/img/icons/${iconFileName}',
+          'assets/img/icons/$iconFileName',
         ),
         const SizedBox(
           height: 4,
