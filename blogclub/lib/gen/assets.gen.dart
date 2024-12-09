@@ -46,9 +46,6 @@ class $AssetsImgIconsGen {
   /// File path: assets/img/icons/Home.png
   AssetGenImage get home => const AssetGenImage('assets/img/icons/Home.png');
 
-  /// File path: assets/img/icons/LOGO.svg
-  String get logo => 'assets/img/icons/LOGO.svg';
-
   /// File path: assets/img/icons/Menu.png
   AssetGenImage get menu => const AssetGenImage('assets/img/icons/Menu.png');
 
@@ -72,6 +69,9 @@ class $AssetsImgIconsGen {
   AssetGenImage get category4 =>
       const AssetGenImage('assets/img/icons/category_4.png');
 
+  /// File path: assets/img/icons/logo.png
+  AssetGenImage get logo => const AssetGenImage('assets/img/icons/logo.png');
+
   /// File path: assets/img/icons/notification.png
   AssetGenImage get notification =>
       const AssetGenImage('assets/img/icons/notification.png');
@@ -80,16 +80,16 @@ class $AssetsImgIconsGen {
   AssetGenImage get plus => const AssetGenImage('assets/img/icons/plus.png');
 
   /// List of all assets
-  List<dynamic> get values => [
+  List<AssetGenImage> get values => [
         articles,
         home,
-        logo,
         menu,
         search,
         category1,
         category2,
         category3,
         category4,
+        logo,
         notification,
         plus
       ];
