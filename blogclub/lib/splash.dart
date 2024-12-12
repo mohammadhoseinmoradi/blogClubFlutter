@@ -1,8 +1,6 @@
 import 'package:blogclub/gen/assets.gen.dart';
-import 'package:blogclub/home.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:blogclub/onboarding.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Future.delayed(const Duration(seconds: 2)).then((value) => {
           Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const HomeScreen()))
+              MaterialPageRoute(builder: (context) => const OnBordingScreen()))
         });
     super.initState();
   }

@@ -1,4 +1,5 @@
 import 'package:blogclub/gen/fonts.gen.dart';
+import 'package:blogclub/onboarding.dart';
 import 'package:blogclub/splash.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -53,7 +54,11 @@ class MyApp extends StatelessWidget {
           //
           // This works for code too, not just values: Most code changes can be
           // tested with just a hot reload.
-          primarySwatch: Colors.blue,
+          colorScheme: const ColorScheme.light(
+              primary: primaryColor,
+              onPrimary: Colors.white,
+              surface: Colors.white,
+              onSurface: primaryTextcolor),
           textTheme: const TextTheme(
               headlineLarge: TextStyle(
                   fontFamily: FontFamily.avenir,
@@ -94,7 +99,7 @@ class MyApp extends StatelessWidget {
         //   const Positioned.fill(child: HomeScreen()),
         //   Positioned(bottom: 0, right: 0, left: 0, child: _BootomNavigation())
         // ]),
-        home: SplashScreen());
+        home: const SplashScreen());
   }
 }
 
