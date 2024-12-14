@@ -74,7 +74,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                                   items[index].title,
                                   style: themeData.textTheme.headlineLarge,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 24,
                                 ),
                                 Text(
@@ -88,7 +88,8 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                   ),
                   Container(
                     height: 60,
-                    padding: EdgeInsets.only(left: 32, right: 32, bottom: 8),
+                    padding:
+                        const EdgeInsets.only(left: 32, right: 32, bottom: 8),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -107,19 +108,20 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                             if (page == items.length - 1) {
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                      builder: (context) => AuthScreen()));
+                                      builder: (context) =>
+                                          const AuthScreen()));
                             } else {
                               _pageController.animateToPage(page + 1,
-                                  duration: Duration(microseconds: 500),
+                                  duration: const Duration(microseconds: 500),
                                   curve: Curves.decelerate);
                             }
                           },
                           style: ButtonStyle(
                             backgroundColor:
-                                MaterialStateProperty.all(Colors.blue),
+                                WidgetStateProperty.all(Colors.blue),
                             minimumSize:
-                                MaterialStateProperty.all(const Size(84, 60)),
-                            shape: MaterialStateProperty.all(
+                                WidgetStateProperty.all(const Size(84, 60)),
+                            shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),

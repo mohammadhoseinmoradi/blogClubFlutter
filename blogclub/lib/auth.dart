@@ -58,8 +58,10 @@ class _AuthScreenState extends State<AuthScreen> {
                               selectedCurrentTab = SignupTab;
                             }),
                             child: Text('Sing up'.toUpperCase(),
-                                style: themeData.textTheme.bodyLarge!
-                                    .apply(color: Colors.white)),
+                                style: themeData.textTheme.bodyLarge!.apply(
+                                    color: selectedCurrentTab == SignupTab
+                                        ? Colors.white
+                                        : Colors.white54)),
                           )
                         ],
                       ),
@@ -74,7 +76,9 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: SingleChildScrollView(
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(32, 48, 32, 32),
-                          child: _login(themeData: themeData),
+                          child: selectedCurrentTab == loginTab
+                              ? _login(themeData: themeData)
+                              : _SingUp(themeData: themeData),
                         ),
                       ),
                     ))
@@ -91,7 +95,6 @@ class _AuthScreenState extends State<AuthScreen> {
 
 class _login extends StatelessWidget {
   const _login({
-    super.key,
     required this.themeData,
   });
 
@@ -106,33 +109,33 @@ class _login extends StatelessWidget {
           'wellcome back',
           style: themeData.textTheme.headlineLarge,
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Text(
           'Sing in with your account',
           style: themeData.textTheme.titleLarge,
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
-        TextField(
+        const TextField(
           decoration: InputDecoration(label: Text('Username')),
         ),
-        PasswordTextFields(),
-        SizedBox(
+        const PasswordTextFields(),
+        const SizedBox(
           height: 24,
         ),
         ElevatedButton(
             onPressed: () {},
             style: ButtonStyle(
-              minimumSize: MaterialStateProperty.all(
+              minimumSize: WidgetStateProperty.all(
                 Size(MediaQuery.of(context).size.width, 60),
               ),
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+              shape: WidgetStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12))),
               backgroundColor:
-                  MaterialStateProperty.all(themeData.colorScheme.primary),
+                  WidgetStateProperty.all(themeData.colorScheme.primary),
             ),
             child: Text(
               'login'.toUpperCase(),
@@ -141,37 +144,37 @@ class _login extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Forgat your password ?'),
-            SizedBox(
+            const Text('Forgat your password ?'),
+            const SizedBox(
               width: 8,
             ),
             TextButton(
               onPressed: () {},
-              child: Text('Reset here'),
+              child: const Text('Reset here'),
             )
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
-        Center(
+        const Center(
           child: Text(
             'OR SING IN WITH',
             style: TextStyle(letterSpacing: 2),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Assets.img.icons.facebook.image(width: 36, height: 36),
-            SizedBox(
+            const SizedBox(
               width: 24,
             ),
             Assets.img.icons.twitter.image(width: 36, height: 36),
-            SizedBox(
+            const SizedBox(
               width: 24,
             ),
             Assets.img.icons.google.image(width: 36, height: 36),
@@ -184,7 +187,6 @@ class _login extends StatelessWidget {
 
 class _SingUp extends StatelessWidget {
   const _SingUp({
-    super.key,
     required this.themeData,
   });
 
@@ -199,65 +201,65 @@ class _SingUp extends StatelessWidget {
           'wellcome to blog club',
           style: themeData.textTheme.headlineLarge,
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Text(
           'Please enter your information',
           style: themeData.textTheme.titleLarge,
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
-        TextField(
+        const TextField(
           decoration: InputDecoration(label: Text('Full name')),
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
-        TextField(
+        const TextField(
           decoration: InputDecoration(label: Text('Username')),
         ),
-        PasswordTextFields(),
-        SizedBox(
+        const PasswordTextFields(),
+        const SizedBox(
           height: 24,
         ),
         ElevatedButton(
             onPressed: () {},
             style: ButtonStyle(
-              minimumSize: MaterialStateProperty.all(
+              minimumSize: WidgetStateProperty.all(
                 Size(MediaQuery.of(context).size.width, 60),
               ),
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+              shape: WidgetStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12))),
               backgroundColor:
-                  MaterialStateProperty.all(themeData.colorScheme.primary),
+                  WidgetStateProperty.all(themeData.colorScheme.primary),
             ),
             child: Text(
               'Sing Up'.toUpperCase(),
               style: themeData.textTheme.bodyLarge!.apply(color: Colors.white),
             )),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
-        Center(
+        const Center(
           child: Text(
             'OR SING Up WITH',
             style: TextStyle(letterSpacing: 2),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 16,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Assets.img.icons.facebook.image(width: 36, height: 36),
-            SizedBox(
+            const SizedBox(
               width: 24,
             ),
             Assets.img.icons.twitter.image(width: 36, height: 36),
-            SizedBox(
+            const SizedBox(
               width: 24,
             ),
             Assets.img.icons.google.image(width: 36, height: 36),
@@ -286,7 +288,7 @@ class _PasswordTextFieldsState extends State<PasswordTextFields> {
       enableSuggestions: false,
       autocorrect: false,
       decoration: InputDecoration(
-          label: Text('Password'),
+          label: const Text('Password'),
           suffix: InkWell(
               onTap: () {
                 setState(() {

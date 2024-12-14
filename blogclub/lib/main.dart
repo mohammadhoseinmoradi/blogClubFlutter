@@ -1,8 +1,6 @@
 import 'package:blogclub/gen/fonts.gen.dart';
-import 'package:blogclub/onboarding.dart';
 import 'package:blogclub/splash.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import './data.dart';
