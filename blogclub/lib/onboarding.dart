@@ -1,3 +1,4 @@
+import 'package:blogclub/auth.dart';
 import 'package:blogclub/gen/assets.gen.dart';
 import 'package:blogclub/home.dart';
 import 'package:flutter/cupertino.dart';
@@ -106,7 +107,7 @@ class _OnBordingScreenState extends State<OnBordingScreen> {
                             if (page == items.length - 1) {
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                      builder: (context) => HomeScreen()));
+                                      builder: (context) => AuthScreen()));
                             } else {
                               _pageController.animateToPage(page + 1,
                                   duration: Duration(microseconds: 500),
