@@ -1,3 +1,4 @@
+import 'package:blogclub/article.dart';
 import 'package:blogclub/gen/fonts.gen.dart';
 import 'package:blogclub/splash.dart';
 
@@ -57,6 +58,11 @@ class MyApp extends StatelessWidget {
               onPrimary: Colors.white,
               surface: Colors.white,
               onSurface: primaryTextcolor),
+          appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.white,
+              foregroundColor: primaryTextcolor,
+              elevation: 0,
+              titleSpacing: 32),
           textTheme: const TextTheme(
               headlineLarge: TextStyle(
                   fontFamily: FontFamily.avenir,
@@ -97,7 +103,7 @@ class MyApp extends StatelessWidget {
         //   const Positioned.fill(child: HomeScreen()),
         //   Positioned(bottom: 0, right: 0, left: 0, child: _BootomNavigation())
         // ]),
-        home: const SplashScreen());
+        home: ArticleScreen());
   }
 }
 
