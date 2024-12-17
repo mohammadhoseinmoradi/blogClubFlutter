@@ -61,9 +61,8 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(
               backgroundColor: Colors.white,
               foregroundColor: primaryTextcolor,
-              elevation: 0,
               titleSpacing: 32),
-          snackBarTheme: SnackBarThemeData(
+          snackBarTheme: const SnackBarThemeData(
             backgroundColor: primaryColor,
           ),
           textTheme: const TextTheme(
