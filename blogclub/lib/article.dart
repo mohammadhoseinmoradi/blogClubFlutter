@@ -22,22 +22,27 @@ class ArticleScreen extends StatelessWidget {
                     blurRadius: 20,
                     color: themeData.colorScheme.primary.withOpacity(0.5))
               ]),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(Assets.img.icons.thumbs),
-              SizedBox(
-                width: 8,
-              ),
-              Text(
-                '2.1 K',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: themeData.colorScheme.onPrimary,
+          child: InkWell(
+            onTap: () {
+              showSnackBar(context, 'Like button is clicked');
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(Assets.img.icons.thumbs),
+                const SizedBox(
+                  width: 8,
                 ),
-              ),
-            ],
+                Text(
+                  '2.1 K',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: themeData.colorScheme.onPrimary,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         backgroundColor: themeData.colorScheme.surface,
@@ -73,7 +78,7 @@ class ArticleScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         child: Assets.img.stories.story9
                             .image(width: 48, height: 48, fit: BoxFit.cover)),
-                    SizedBox(
+                    const SizedBox(
                       width: 16,
                     ),
                     Expanded(
@@ -85,26 +90,30 @@ class ArticleScreen extends StatelessWidget {
                             style: themeData.textTheme.bodyLarge!
                                 .copyWith(fontWeight: FontWeight.w400),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 4,
                           ),
-                          Text('moradi')
+                          const Text('moradi')
                         ],
                       ),
                     ),
                     IconButton(
                         color: themeData.colorScheme.primary,
-                        onPressed: () {},
-                        icon: Icon(CupertinoIcons.bookmark)),
+                        onPressed: () {
+                          showSnackBar(context, 'bookmark button is clicked');
+                        },
+                        icon: const Icon(CupertinoIcons.bookmark)),
                     IconButton(
                         color: themeData.colorScheme.primary,
-                        onPressed: () {},
-                        icon: Icon(CupertinoIcons.share))
+                        onPressed: () {
+                          showSnackBar(context, 'share button is clicked');
+                        },
+                        icon: const Icon(CupertinoIcons.share))
                   ],
                 ),
               ),
               ClipRRect(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(32),
                       topRight: Radius.circular(32)),
                   child: Assets.img.background.singlePost.image()),
@@ -125,5 +134,12 @@ class ArticleScreen extends StatelessWidget {
             ],
           ),
         ));
+  }
+
+  void showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      behavior: SnackBarBehavior.fixed,
+    ));
   }
 }

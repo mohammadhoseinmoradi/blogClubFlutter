@@ -63,6 +63,9 @@ class MyApp extends StatelessWidget {
               foregroundColor: primaryTextcolor,
               elevation: 0,
               titleSpacing: 32),
+          snackBarTheme: SnackBarThemeData(
+            backgroundColor: primaryColor,
+          ),
           textTheme: const TextTheme(
               headlineLarge: TextStyle(
                   fontFamily: FontFamily.avenir,
@@ -103,7 +106,7 @@ class MyApp extends StatelessWidget {
         //   const Positioned.fill(child: HomeScreen()),
         //   Positioned(bottom: 0, right: 0, left: 0, child: _BootomNavigation())
         // ]),
-        home: ArticleScreen());
+        home: const ArticleScreen());
   }
 }
 
